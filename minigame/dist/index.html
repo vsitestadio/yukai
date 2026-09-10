@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>game name 2</title>
+    <link rel="stylesheet" href="./style.css">
+
+  </head>
+    
+  <body>
+  <html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>エレベーターパニック：緊急停止！</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="game-layout">
+
+    <!-- LEFT: Scoreboard -->
+    <div id="left-panel">
+      <pre id="result"></pre>
+    </div>
+
+    <!-- CENTER: Elevator game -->
+    <div id="center-panel">
+      <h1>エレベーターパニック：緊急停止！</h1>
+
+      <div>
+        <label for="difficulty">🎮 難易度：</label>
+        <select id="difficulty">
+          <option value="Easy">Easy</option>
+          <option value="Normal" selected>Normal</option>
+          <option value="Hard">Hard</option>
+        </select>
+      </div>
+
+      <div id="timer">⏱️ 残り時間: 10s</div>
+
+      <div id="building">
+        <div id="floors"></div>
+        <div id="elevator">
+          <div id="spark-container"></div>
+          <div id="danger-label">⚠️ DANGER</div>
+
+          
+        </div>
+      </div>
+
+      <!-- Name entry -->
+      <div id="name-entry" style="display: none;">
+        <input type="text" id="player-name" placeholder="名前を入力..." maxlength="10" />
+        <button id="submit-score">スコア登録</button>
+      </div>
+    </div>
+
+    <!-- RIGHT: Buttons -->
+    <div id="right-panel">
+      <button id="restart-button">START</button>
+
+      <button id="stop-button">STOP!</button>
+    </div>
+  </div>
+
+  <!-- Sound effects -->
+  <audio id="tick-sound" src="tick.mp3" preload="auto"></audio>
+  <audio id="crash-sound" src="crash.mp3" preload="auto"></audio>
+  <audio id="alert-sound" src="alert.mp3" preload="auto"></audio>
+
+  <!-- Crash flash -->
+  <div id="crash-flash"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+    <script  src="./script.js"></script>
+
+  </body>
+  
+</html>

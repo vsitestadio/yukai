@@ -1,0 +1,323 @@
+/* ========== BODY & LAYOUT ========== */
+body {
+  margin: 0;
+  font-family: "Arial", sans-serif;
+  background: #111;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+/* Main layout */
+#game-layout {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: stretch;
+  gap: 30px;
+  margin-top: 30px;
+  height: 600px;
+  position: relative;
+}
+
+/* Panels */
+#left-panel,
+#right-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+}
+
+#result {
+  font-size: 14px;
+  color: white;
+  white-space: pre-wrap;
+  text-align: left;
+  max-width: 180px;
+}
+
+/* Center panel */
+#center-panel {
+  text-align: center;
+}
+
+/* ========== BUILDING IMAGE ========== */
+#building {
+  position: relative;
+  width: 650px;                      /* match actual image width */
+  height: 650px;                     /* match image height */
+  margin: 20px auto;
+  overflow: visible;
+  border-radius: 10px;
+  border: 0;
+  background-image: url(https://characteristic-tomato-d8cadeaghr.edgeone.app/ミニゲームデザイン_New.png);
+  background-size: cover;            /* fills entire div, preserves aspect ratio */
+  background-repeat: no-repeat;
+  background-position: center;
+  box-shadow: none;
+  z-index: 0;
+}
+
+/* Hide old shaft/floor elements completely */
+#floors,
+.floor-line,
+#ground-platform {
+  display: none !important;
+}
+/* Danger label */
+#danger-label {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
+  font-size: 18px;
+  color: red;
+  font-weight: bold;
+  display: none;
+  animation: blink 1s infinite;
+  z-index: 2; /* above building */
+}
+
+@keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0.1; }
+  100% { opacity: 1; }
+}
+:root {
+  --elevator-left: 40%;   /* default horizontal position */
+  --elevator-bottom: 2px; /* default vertical position */
+}
+
+#elevator {
+  position: absolute;
+  width: 80px;              /* scale to building */
+  height: 123px;
+  left: var(--elevator-left);  
+  bottom: var(--elevator-bottom); 
+  transform: translateX(-50%);
+  z-index: 6;
+  border-radius: 0;
+  overflow: hidden;
+
+  background-image: url("https://ik.imagekit.io/1sntxiijv/%E3%82%A8%E3%83%AC%E3%83%98%E3%82%99%E3%83%BC%E3%82%BF%E3%83%BC.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: transparent;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+#stop-button,
+#restart-button { 
+  width: 120px;
+  padding: 12px;
+  font-size: 18px;
+  border-radius: 10px;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin: 10px 0;
+}
+
+/* Stop button stays crimson red */
+#stop-button {
+  background-color: crimson;
+}
+
+/* Restart (Start) button becomes green */
+#restart-button {
+  background-color: green;
+}
+
+/* Disabled states */
+#stop-button:disabled,
+#restart-button:disabled {
+  background-color: gray;
+  cursor: not-allowed;
+}
+
+/* ========== TIMER ========== */
+#timer {
+  font-size: 18px;
+  margin-top: 10px;
+  display:none;
+}
+
+/* ========== EFFECTS LAYER ========== */
+.effect-layer {
+  position: absolute;
+  width: 480px;
+  height: 600px;
+  pointer-events: none;
+  top: 0;
+  left: 67%;          /* move right by 2% of container width */
+  transform: translateX(-50%);
+  z-index: 7;
+}
+
+.spark {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: radial-gradient(circle, #ffff88 0%, #ff3300 100%);
+  border-radius: 50%;
+  opacity: 0.9;
+  animation: spark-move 0.8s ease-out forwards;
+}
+
+.smoke {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  background: radial-gradient(circle, #555, transparent);
+  opacity: 0.3;
+  border-radius: 50%;
+  animation: smoke-rise 1.2s ease-out forwards;
+}
+
+.fire {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: radial-gradient(circle, orange, red);
+  border-radius: 50%;
+  opacity: 0.8;
+  animation: fire-flicker 0.5s infinite alternate;
+}
+
+@keyframes spark-move {
+  0% { transform: translate(0, 0); opacity: 1; }
+  100% { transform: translate(var(--dx), var(--dy)); opacity: 0; }
+}
+
+@keyframes smoke-rise {
+  0% { transform: translateY(0); opacity: 0.3; }
+  100% { transform: translateY(-40px); opacity: 0; }
+}
+
+@keyframes fire-flicker {
+  from { transform: scale(1); opacity: 0.8; }
+  to { transform: scale(1.4); opacity: 0.4; }
+}
+
+/* ========== FLASH EFFECT ========== */
+#crash-flash {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 0, 0, 0.5);
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+/* ========== NAME ENTRY ========== */
+#name-entry {
+  margin-top: 20px;
+}
+
+#player-name {
+  padding: 8px;
+  font-size: 16px;
+  width: 150px;
+  text-align: center;
+}
+
+#submit-score {
+  margin-left: 10px;
+  padding: 8px 14px;
+  font-size: 16px;
+  background-color: darkgreen;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* ========== LEADERBOARD ========== */
+.leaderboard {
+  position: relative;
+  left: -120px; /* move left by 50px */
+  background: #222;
+  color: #eee;
+  width: 280px;
+  padding: 15px 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.leaderboard-title {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-bottom: 15px;
+  text-align: center;
+  letter-spacing: 1.5px;
+  color: #ffd700;
+  text-transform: uppercase;
+}
+
+.leaderboard-entry {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px solid #444;
+  font-size: 1rem;
+}
+
+.leaderboard-entry:last-child {
+  border-bottom: none;
+}
+
+.rank {
+  width: 24px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.rank.gold { color: #ffd700; font-weight: 900; }
+.rank.silver { color: #c0c0c0; font-weight: 900; }
+.rank.bronze { color: #cd7f32; font-weight: 900; }
+
+.name {
+  flex-grow: 1;
+  padding-left: 10px;
+  color: #ddd;
+  font-weight: 600;
+}
+
+.score {
+  min-width: 75px;
+  text-align: right;
+  font-weight: 700;
+  color: #fff;
+}
+
+/* Fade-in animation for leaderboard */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 0.7s ease forwards;
+}
+
+.newest-entry {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  font-weight: 700;
+  color: #ffd700;
+}
