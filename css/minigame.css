@@ -1,0 +1,365 @@
+@charset "utf-8";
+
+/* =====================
+   BASE
+===================== */
+#timer {
+  display: none !important;
+}
+
+body {
+  font-family: "Arial", sans-serif;
+  background: #111;
+  color: white;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+/* =====================
+   LAYOUT
+===================== */
+#game-layout {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: 50px;
+  position: relative;
+}
+
+/* =====================
+   CENTER PANEL
+===================== */
+#center-panel {
+  text-align: center;
+  position: relative;
+}
+
+/* =====================
+   BUILDING
+===================== */
+#building {
+  position: relative;
+  width: clamp(500px, calc(500px + (100 / 300) * (100vw - 900px)), 600px);
+  height: 900px;
+  background: url("../img/building.png") center / cover no-repeat;
+  overflow: hidden;
+  z-index: 1;
+}
+
+#floors,
+.floor-line,
+#ground-platform {
+  display: none !important;
+}
+
+/* =====================
+   ELEVATOR
+===================== */
+#elevator {
+  position: absolute;
+  width: 100px;
+  height: 130px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 6;
+  background: url("https://ik.imagekit.io/1sntxiijv/%E3%82%A8%E3%83%AC%E3%83%98%E3%82%99%E3%83%BC%E3%82%BF%E3%83%BC.png")
+    center / contain no-repeat;
+}
+
+/* =====================
+   DANGER
+===================== */
+#danger-label {
+  position: absolute;
+  bottom: 15px;
+  right: 10%;
+  font-size: 18px;
+  color: red;
+  font-weight: bold;
+  display: none;
+  animation: blink 1s infinite;
+  z-index: 10;
+}
+
+@keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0.1; }
+  100% { opacity: 1; }
+}
+
+/* =====================
+   BUTTONS
+===================== */
+#right-panel {
+  position: absolute;
+  bottom: 150px;
+  right: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  z-index: 20;
+}
+
+#action-button,
+#reset-button {
+  width: 90px;
+  height: 90px;
+  background: center / contain no-repeat;
+  border: none;
+  cursor: pointer;
+}
+
+#action-button.start {
+  background-image: url("../img/start-bt.png");
+}
+
+#action-button.stop {
+  background-image: url("../img/stop-bt.png");
+}
+
+#reset-button {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+#reset-button.visible {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#reset-button.reset {
+  background-image: url("../img/reset-bt.png");
+}
+
+/* =====================
+   OVERLAY UI（完成版）
+===================== */
+#overlay-ui {
+  text-align: center;
+  margin-top: 250px;
+  top: 250px;
+  left: 50%;
+  min-height: 200px;
+  height: 220px;
+  z-index: 30;
+  background: rgba(0, 0, 0, 0.35);
+  padding: 15px 25px;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
+#overlay-ui h1 {
+  margin: 0;
+}
+
+.title-main {
+  font-size: 36px;
+  font-weight: bold;
+}
+
+.title-sub {
+  font-size: 24px;
+  font-weight: bold;
+  color: #ffd700;
+}
+
+.game-text {
+  font-size: 20px;
+  margin-top: 10px;
+}
+
+/* =====================
+   RESULT（順位表示対応）
+===================== */
+#result {
+  position: relative;
+  z-index: 35;
+  width: 100%;
+  margin-top: 40px;
+  font-size: 15px;
+  white-space: pre-wrap;
+  text-align: center;
+  min-height: 40px;
+  line-height: 1.6;
+}
+
+#result .rank {
+  color: #ffd700;
+  font-weight: bold;
+}
+/* =====================
+   RANKING
+===================== */
+#ranking {
+  display: none; /* ← 初期非表示 */
+  margin-top: 16px;
+  padding: 12px;
+  background: rgba(0,0,0,0.45);
+  border-radius: 10px;
+}
+
+#ranking h3 {
+  text-align: center;
+  color: #ffd700;
+  margin-bottom: 10px;
+}
+
+.ranking-row {
+  padding: 6px 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+  color: #fff;
+}
+
+.ranking-row.me {
+  color: #00ffcc;
+  font-weight: bold;
+  background: rgba(0,255,204,0.15);
+  border-radius: 6px;
+}
+
+/* =====================
+   DIFFICULTY
+===================== */
+#difficulty-wrapper {
+  margin-top: 30px;
+  font-size: 18px;
+}
+
+#difficulty {
+  font-size: 16px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: #222;
+  color: white;
+  border: 1px solid #555;
+}
+
+/* =====================
+   NAME ENTRY
+===================== */
+#name-entry {
+  position: absolute;
+  bottom: 300px;
+  right: 60px;
+  display: flex;
+  gap: 10px;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  z-index: 40;
+}
+
+#name-entry.active {
+  visibility: visible;
+  opacity: 1;
+}
+
+#player-name {
+  padding: 8px;
+  width: 150px;
+}
+
+#submit-score {
+  padding: 10px 14px;
+  background: darkgreen;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* =====================
+   FLASH
+===================== */
+#crash-flash {
+  position: fixed;
+  inset: 0;
+  background: rgba(255,0,0,0.5);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transition: opacity 0.2s ease;
+}
+
+/* =====================
+   RESPONSIVE
+===================== */
+@media (max-width: 900px) {
+  #game-layout {
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+  }
+
+  #building {
+    width: 100vw;
+    height: 100vh;
+    background-size: auto 100%;
+  }
+#ranking {
+    margin-top: 16px;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.70);
+    border-radius: 10px;
+    width: 50%;
+    margin: 50px auto 0px;
+}
+
+  #overlay-ui {
+	position: absolute;
+    transform: translateX(-50%);
+    top: 0;
+    height: 150px;
+    margin-top: 0px;
+    min-height: 130px;
+    background: rgba(0, 0, 0, 0.55);
+    width: 100%;
+	text-align: center;
+	padding: 10px 25px;
+  }
+
+  #result {
+    width: 70%;
+    margin: 15px auto 0;
+  }
+
+  #right-panel {
+    bottom: 150px;
+    right: 20px;
+  }
+
+    #name-entry {
+      bottom: 150px;
+      left: 50%;
+      right: auto;
+      transform: translateX(-50%);
+      flex-direction: column;
+      background: rgba(0, 0, 0, 0.45);
+      padding: 15px 80px;
+      border-radius: 10px;
+        
+    }
+.title-main {
+    font-size: 25px;
+    font-weight: bold;
+}
+.title-sub {
+    font-size: 25px;
+    font-weight: bold;
+    color: #ffd700;
+}
+.game-text {
+    font-size: 20px;
+    margin-top: 0px;
+}
+#difficulty-wrapper {
+    margin-top: 0px;
+    font-size: 18px;
+}
+}
